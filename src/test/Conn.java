@@ -14,8 +14,10 @@ public class Conn {
     public static String url="jdbc:mysql://localhost:3306/socket?&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
     public static String user="root";
     public static String password="980829";
+    public static Connection con;
+
     public static void main(String[] args) {
-        Connection con;
+
         try {
             //注册JDBC驱动程序
             Class.forName(driver);
