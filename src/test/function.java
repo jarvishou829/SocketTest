@@ -1,6 +1,8 @@
 package test;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -14,6 +16,7 @@ public class function {
     public static JFrame func;
     private static Vector<String> dataTitle = new Vector<String>();//表格列名
     private static Vector<Vector<String>> data = new Vector<Vector<String>>();//表格单元格内容
+    private static int selectedRow;
     private static String uname;
 
 
@@ -105,7 +108,50 @@ public class function {
                 table.updateUI();
             }
         });
+
         panel.add(openBtn);
+        JButton loadBtn = new JButton("请求资源");
+
+        ListSelectionModel selectionModel = table.getSelectionModel();
+        int selectionMode=ListSelectionModel.SINGLE_SELECTION;
+        selectionModel.setSelectionMode(selectionMode);
+        selectionModel.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent g) {
+                // 获取选中的第一行
+
+                selectedRow = table.getSelectedRow();
+            }
+        });
+        loadBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(selectedRow);
+                String getName = String.valueOf(table.getValueAt(selectedRow,0));
+                System.out.println(getName);
+            }
+        });
+
+
+//        loadBtn.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                ListSelectionModel selectionModel = table.getSelectionModel();
+//                int selectionMode=ListSelectionModel.SINGLE_SELECTION;
+//                selectionModel.setSelectionMode(selectionMode);
+//                selectionModel.addListSelectionListener(new ListSelectionListener() {
+//                    @Override
+//                    public void valueChanged(ListSelectionEvent g) {
+//                        // 获取选中的第一行
+//                        selectedRow = table.getSelectedRow();
+//                    }
+//                });
+//                System.out.println(selectedRow);
+//                String getName = String.valueOf(table.getValueAt(selectedRow,0));
+//                System.out.println(getName);
+//            }
+//        });
+        panel.add(loadBtn);
 
     }
     private static String showFileOpenDialog(Component parent, JScrollPane msgTextArea) {
